@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 
 // ランダム座標を取得（東京近辺）
 function getRandomLatLng(): { lat: number; lng: number } {
@@ -14,11 +14,15 @@ function getRandomLatLng(): { lat: number; lng: number } {
 function Map() {
 	const [coords, setCoords] = useState(getRandomLatLng())
 
-	const refresh = () => {
+	const refresh = useCallback(() => {
 		setCoords(getRandomLatLng())
-	}
+	}, [])
 
-	const url = `https://www.google.com/maps?q=&layer=c&cbll=${coords.lat},${coords.lng}&cbp=11,0,0,0,0&output=svembed`
+	const url = useMemo(
+		() =>
+			`https://www.google.com/maps?q=&layer=c&cbll=${coords.lat},${coords.lng}&cbp=11,0,0,0,0&output=svembed`,
+		[coords.lat, coords.lng]
+	)
 
 	return (
 		<div
