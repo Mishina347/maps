@@ -23,8 +23,9 @@ function Map() {
 	return (
 		<div
 			style={{
-				width: '99%',
-				height: '99%',
+				width: '90%',
+				height: '90%',
+				margin: 'auto',
 				position: 'relative',
 				borderRadius: 8,
 				overflow: 'hidden',
@@ -33,7 +34,7 @@ function Map() {
 			<iframe
 				src={url}
 				title={`StreetView_${coords.lat}_${coords.lng}`}
-				style={{ width: '100%', height: '100%', border: 'none' }}
+				style={{ width: '98%', height: '98%', border: 'none', margin: 'auto' }}
 				allowFullScreen
 				loading="lazy"
 			/>
@@ -41,12 +42,12 @@ function Map() {
 				onClick={refresh}
 				style={{
 					position: 'absolute',
-					top: 8,
-					right: 8,
+					bottom: 12,
+					left: 8,
 					background: '#ffffffcc',
 					border: '1px solid #ccc',
 					borderRadius: 4,
-					padding: '4px 8px',
+					padding: '4px',
 					cursor: 'pointer',
 					fontSize: 12,
 				}}
@@ -71,6 +72,7 @@ export default function App({ count = 6, columns = 3 }: AppProps) {
 				display: 'grid',
 				gridTemplateColumns: `repeat(${columns}, 1fr)`,
 				gap: '1rem',
+				margin: '1rem',
 				padding: '1rem',
 				height: '100vh',
 				boxSizing: 'border-box',
