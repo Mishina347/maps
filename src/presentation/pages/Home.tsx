@@ -60,32 +60,47 @@ const Home: React.FC = () => {
 
 	return (
 		<div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-			<div style={{ padding: '8px 16px', background: '#f4f4f4', display: 'flex', gap: '16px' }}>
-				<label>
-					表示数:
+			<section
+				aria-labelledby="grid-settings"
+				style={{
+					padding: '8px 16px',
+					background: '#f4f4f4',
+					display: 'flex',
+					gap: '16px',
+					alignItems: 'center',
+				}}
+			>
+				<h2 id="grid-settings" style={{ margin: 0, fontSize: '1rem' }}>
+					表示設定
+				</h2>
+				<fieldset>
+					<legend>表示数（1〜100）</legend>
+
 					<input
 						type="number"
 						value={count}
 						onChange={handleCountChange}
 						min={1}
 						max={100}
+						aria-labelledby="grid-settings count"
 						style={{ width: 60 }}
 					/>
-				</label>
-				<label>
-					列数:
+				</fieldset>
+				<fieldset>
+					<legend>列数（1〜10）</legend>
 					<input
 						type="number"
 						value={columns}
 						onChange={handleColumnsChange}
 						min={1}
 						max={10}
+						aria-labelledby="grid-settings columns"
 						style={{ width: 60 }}
 					/>
-				</label>
-			</div>
-
-			<div
+				</fieldset>
+			</section>
+			<section
+				aria-label="ストリートビュー一覧"
 				style={{
 					display: 'grid',
 					gridTemplateColumns: `repeat(${columns}, 1fr)`,
@@ -95,10 +110,10 @@ const Home: React.FC = () => {
 					overflow: 'auto',
 				}}
 			>
-				{mapIdsRef.current.slice(0, count).map(id => (
-					<Map key={id} id={id} />
+				{mapIdsRef.current.slice(0, count).map((id, i) => (
+					<Map key={id} refId={id} mapId={i} />
 				))}
-			</div>
+			</section>
 		</div>
 	)
 }

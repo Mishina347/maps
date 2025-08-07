@@ -3,10 +3,11 @@ import { getRandomLatLng } from '../../application/usecases/useRandomLatLng'
 import { useInView } from 'react-intersection-observer'
 
 type Props = {
-	id: string
+	refId: string
+	mapId: number
 }
 
-export const Map: React.FC<Props> = ({ id }) => {
+export const Map: React.FC<Props> = ({ refId, mapId }) => {
 	const [coords, setCoords] = useState(getRandomLatLng())
 	const { ref, inView } = useInView({ triggerOnce: true })
 
@@ -19,11 +20,12 @@ export const Map: React.FC<Props> = ({ id }) => {
 		<div
 			ref={ref}
 			style={{ width: '100%', height: '100%', position: 'relative', aspectRatio: '1 / 1' }}
+			role="region"
 		>
 			{inView ? (
 				<iframe
 					src={url}
-					title={`StreetView_${id}`}
+					title={`StreetView_${mapId}`}
 					style={{ width: '100%', height: '100%', border: 0, borderRadius: 8 }}
 					loading="lazy"
 					allow="accelerometer; gyroscope; fullscreen"
@@ -32,6 +34,7 @@ export const Map: React.FC<Props> = ({ id }) => {
 				<div style={{ width: '100%', height: '100%', background: '#eee' }} />
 			)}
 			<button
+				aria-label={`ストリートビュー ${mapId} を再読み込み`}
 				onClick={refresh}
 				style={{
 					position: 'absolute',
