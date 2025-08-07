@@ -25,6 +25,7 @@ export const Map: React.FC<Props> = ({ refId, mapId }) => {
 			{inView ? (
 				<iframe
 					src={url}
+					sandbox
 					title={`StreetView_${mapId}`}
 					style={{ width: '100%', height: '100%', border: 0, borderRadius: 8 }}
 					loading="lazy"
