@@ -68,6 +68,7 @@ const Home: React.FC = () => {
 						value={count}
 						onChange={handleCountChange}
 						min={1}
+						max={100}
 						style={{ width: 60 }}
 					/>
 				</label>
@@ -78,6 +79,7 @@ const Home: React.FC = () => {
 						value={columns}
 						onChange={handleColumnsChange}
 						min={1}
+						max={10}
 						style={{ width: 60 }}
 					/>
 				</label>
@@ -94,9 +96,7 @@ const Home: React.FC = () => {
 				}}
 			>
 				{mapIdsRef.current.slice(0, count).map(id => (
-					<div key={id} style={{ aspectRatio: '1 / 1' }}>
-						<Map id={id} />
-					</div>
+					<Map key={id} id={id} />
 				))}
 			</div>
 		</div>
