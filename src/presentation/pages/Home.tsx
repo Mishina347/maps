@@ -42,7 +42,9 @@ const Home: React.FC = () => {
 		[normalizeCount]
 	)
 
-	const mapsArray = useMemo(() => Array.from({ length: count }), [count])
+	const mapIdsArray = useMemo(() => {
+		return Array.from({ length: count }, () => crypto.randomUUID())
+	}, [])
 
 	return (
 		<div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -79,8 +81,8 @@ const Home: React.FC = () => {
 					overflow: 'auto',
 				}}
 			>
-				{mapsArray.map((_, i) => (
-					<div key={i} style={{ aspectRatio: '1 / 1' }}>
+				{mapIdsArray.map(_key => (
+					<div key={_key} style={{ aspectRatio: '1 / 1' }}>
 						<Map />
 					</div>
 				))}
