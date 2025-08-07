@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 
 // ランダム座標を取得（東京近辺）
-function getRandomLatLng(): { lat: number; lng: number } {
+const getRandomLatLng = (): { lat: number; lng: number } => {
 	const latMin = 35.5
 	const latMax = 35.8
 	const lngMin = 139.6
@@ -11,7 +11,7 @@ function getRandomLatLng(): { lat: number; lng: number } {
 	return { lat, lng }
 }
 
-function Map() {
+const Map = () => {
 	const [coords, setCoords] = useState(getRandomLatLng())
 
 	const refresh = useCallback(() => {
