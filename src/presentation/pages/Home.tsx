@@ -1,50 +1,62 @@
-import React, { useState, useCallback, useMemo } from 'react'
-import Map from '../components/Map'
+import React, { useState, useCallback, useMemo, useRef } from 'react'
+import { Map } from '../components/Map'
 
 const Home: React.FC = () => {
 	const [columns, setColumns] = useState(3)
 	const [count, setCount] = useState(6)
 
-	// countをcolumnsの倍数に丸める関数
-	const normalizeCount = useCallback((value: number, cols: number) => {
-		if (cols <= 0) return value
-		return Math.ceil(value / cols) * cols
+	// MapのIDリストを保持（永続的に）
+	const mapIdsRef = useRef<string[]>([])
+
+	// 必要数だけIDがあるかチェックして、不足分を追加
+	const ensureIds = useCallback((newCount: number) => {
+		const current = mapIdsRef.current.length
+		if (current < newCount) {
+			const additional = Array.from({ length: newCount - current }, () => crypto.randomUUID())
+			mapIdsRef.current = [...mapIdsRef.current, ...additional]
+		} else if (current > newCount) {
+			mapIdsRef.current = mapIdsRef.current.slice(0, newCount)
+		}
 	}, [])
 
-	const normalizeCountDownSafe = useCallback(
-		(value: number, cols: number): number => {
-			if (cols <= 0) return value
-			const floored = Math.floor(value / cols) * cols
-			return floored > 0 ? floored : cols // 最低1行分は出す
-		},
-		[count]
-	)
+	// 必ず初期化
+	ensureIds(count)
+
+	const normalizeCount = (value: number, current: number, columns: number): number => {
+		if (columns <= 0) return value
+		if (value > current) {
+			// 増加 → 切り上げ
+			return Math.ceil(value / columns) * columns
+		} else {
+			// 減少 → 切り捨て（ただし最低 1 行分は表示）
+			return Math.max(columns, Math.floor(value / columns) * columns)
+		}
+	}
 
 	const handleCountChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const value = parseInt(e.target.value)
 			if (!isNaN(value) && value > 0) {
-				const newCount = normalizeCountDownSafe(value, columns)
+				const newCount = normalizeCount(value, count, columns)
+				ensureIds(newCount)
 				setCount(newCount)
 			}
 		},
-		[columns]
+		[count, columns, ensureIds]
 	)
 
 	const handleColumnsChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const value = parseInt(e.target.value)
 			if (!isNaN(value) && value > 0) {
+				const newCount = Math.ceil(count / value) * value
+				ensureIds(newCount)
 				setColumns(value)
-				setCount(prevCount => normalizeCount(prevCount, value))
+				setCount(newCount)
 			}
 		},
-		[normalizeCount]
+		[count, ensureIds]
 	)
-
-	const mapIdsArray = useMemo(() => {
-		return Array.from({ length: count }, () => crypto.randomUUID())
-	}, [])
 
 	return (
 		<div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -81,9 +93,9 @@ const Home: React.FC = () => {
 					overflow: 'auto',
 				}}
 			>
-				{mapIdsArray.map(_key => (
-					<div key={_key} style={{ aspectRatio: '1 / 1' }}>
-						<Map />
+				{mapIdsRef.current.slice(0, count).map(id => (
+					<div key={id} style={{ aspectRatio: '1 / 1' }}>
+						<Map id={id} />
 					</div>
 				))}
 			</div>

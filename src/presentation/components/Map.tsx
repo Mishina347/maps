@@ -1,24 +1,32 @@
 import React, { useState, useCallback } from 'react'
 import { getRandomLatLng } from '../../application/usecases/useRandomLatLng'
+import { useInView } from 'react-intersection-observer'
 
-const Map: React.FC = () => {
+type Props = {
+	id: string
+}
+
+export const Map: React.FC<Props> = ({ id }) => {
 	const [coords, setCoords] = useState(getRandomLatLng())
+	const { ref, inView } = useInView({ triggerOnce: true })
 
 	const refresh = useCallback(() => {
 		setCoords(getRandomLatLng())
 	}, [])
 
 	const url = `https://www.google.com/maps?q=&layer=c&cbll=${coords.lat},${coords.lng}&cbp=11,0,0,0,0&output=svembed`
-
 	return (
-		<div style={{ width: '100%', height: '100%', position: 'relative' }}>
-			<iframe
-				loading="lazy"
-				sandbox="allow-scripts allow-same-origin"
-				src={url}
-				title={`StreetView_${coords.lat}_${coords.lng}`}
-				style={{ width: '100%', height: '100%', border: 0, borderRadius: 8 }}
-			/>
+		<div ref={ref} style={{ width: '100%', height: '100%', position: 'relative' }} id={id}>
+			{inView ? (
+				<iframe
+					src={url}
+					title={`StreetView_${id}`}
+					style={{ width: '100%', height: '100%', border: 0, borderRadius: 8 }}
+					loading="lazy"
+				/>
+			) : (
+				<div style={{ width: '100%', height: '100%', background: '#eee' }} />
+			)}
 			<button
 				onClick={refresh}
 				style={{
@@ -38,5 +46,3 @@ const Map: React.FC = () => {
 		</div>
 	)
 }
-
-export default React.memo(Map)

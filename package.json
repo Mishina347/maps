@@ -11,7 +11,8 @@
 	"dependencies": {
 		"@googlemaps/js-api-loader": "^1.16.10",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react-dom": "^18.2.0",
+		"react-intersection-observer": "^9.16.0"
 	},
 	"devDependencies": {
 		"@types/google.maps": "^3.58.1",
