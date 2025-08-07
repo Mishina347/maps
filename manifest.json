@@ -1,0 +1,12 @@
+{
+	"manifest_version": 3,
+	"name": "Random Street View Tab",
+	"version": "1.0",
+	"description": "Displays a random Google Street View in the new tab.",
+	"chrome_url_overrides": {
+		"newtab": "dist/index.html"
+	},
+	"content_security_policy": {
+		"extension_page": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+	}
+}
