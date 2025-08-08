@@ -68,10 +68,11 @@ const Home: React.FC = () => {
 			<section
 				aria-labelledby="grid-settings"
 				style={{
-					padding: '8px 16px',
+					maxHeight: '4rem',
+					padding: '0.6rem',
 					background: '#f4f4f4',
 					display: 'flex',
-					gap: '16px',
+					gap: '0.6rem',
 					alignItems: 'center',
 				}}
 			>
@@ -92,7 +93,7 @@ const Home: React.FC = () => {
 						min={MIN_COUNTS}
 						max={MAX_COUNTS}
 						aria-labelledby="grid-settings count"
-						style={{ width: 60 }}
+						style={{ width: '3rem', height: '28px' }}
 					/>
 				</fieldset>
 				<fieldset>
@@ -109,7 +110,7 @@ const Home: React.FC = () => {
 						min={MIN_COLUMNS}
 						max={MAX_COLUMNS}
 						aria-labelledby="grid-settings columns"
-						style={{ width: 60 }}
+						style={{ width: '3rem', height: '28px' }}
 					/>
 				</fieldset>
 				<fieldset>
