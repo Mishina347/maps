@@ -18,7 +18,7 @@ export const RegionSelector: React.FC = () => {
 				id={selectId}
 				value={region}
 				aria-label="表示する地域を選択"
-				style={{ width: '3rem', height: '32px' }}
+				style={{ width: '6rem', height: '32px' }}
 				onChange={e => setRegion(e.target.value as RegionKey)}
 			>
 				{Object.entries(RegionNames).map(([key, name]) => (
