@@ -4,3 +4,8 @@ export const TOKYO_BOUNDS = {
 	lngMin: 139.6,
 	lngMax: 139.9,
 }
+
+export const MAX_COUNTS = 100
+export const MIN_COUNTS = 1
+export const MAX_COLUMNS = 10
+export const MIN_COLUMNS = 1

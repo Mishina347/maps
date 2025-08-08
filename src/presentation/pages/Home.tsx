@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo, useRef } from 'react'
 import { Map } from '../components/Map'
+import { MAX_COLUMNS, MAX_COUNTS, MIN_COLUMNS, MIN_COUNTS } from '../../constants/mapConfig'
 
 const Home: React.FC = () => {
 	const [columns, setColumns] = useState(3)
@@ -36,7 +37,7 @@ const Home: React.FC = () => {
 	const handleCountChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const value = parseInt(e.target.value)
-			if (!isNaN(value) && value > 0) {
+			if (!isNaN(value) && MIN_COUNTS <= value) {
 				const newCount = normalizeCount(value, count, columns)
 				ensureIds(newCount)
 				setCount(newCount)
@@ -48,7 +49,7 @@ const Home: React.FC = () => {
 	const handleColumnsChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const value = parseInt(e.target.value)
-			if (!isNaN(value) && value > 0) {
+			if (!isNaN(value) && MIN_COLUMNS <= value) {
 				const newCount = Math.ceil(count / value) * value
 				ensureIds(newCount)
 				setColumns(value)
@@ -75,13 +76,17 @@ const Home: React.FC = () => {
 				</h2>
 				<fieldset>
 					<legend>表示数（1〜100）</legend>
-
 					<input
 						type="number"
 						value={count}
-						onChange={handleCountChange}
-						min={1}
-						max={100}
+						onChange={e => {
+							if (Number(e.target.value) <= MAX_COUNTS) {
+								// 最大100
+								handleCountChange(e)
+							}
+						}}
+						min={MIN_COUNTS}
+						max={MAX_COUNTS}
 						aria-labelledby="grid-settings count"
 						style={{ width: 60 }}
 					/>
@@ -91,9 +96,14 @@ const Home: React.FC = () => {
 					<input
 						type="number"
 						value={columns}
-						onChange={handleColumnsChange}
-						min={1}
-						max={10}
+						onChange={e => {
+							if (Number(e.target.value) <= MAX_COLUMNS) {
+								// 最大10
+								handleColumnsChange(e)
+							}
+						}}
+						min={MIN_COLUMNS}
+						max={MAX_COLUMNS}
 						aria-labelledby="grid-settings columns"
 						style={{ width: 60 }}
 					/>
