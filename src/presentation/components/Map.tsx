@@ -1,6 +1,8 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect, useContext } from 'react'
 import { getRandomLatLng } from '../../application/usecases/useRandomLatLng'
 import { useInView } from 'react-intersection-observer'
+import { RegionKey } from '../../constants/mapConfig'
+import { RegionContext } from '../../interface/regionContext'
 
 type Props = {
 	refId: string
@@ -8,12 +10,17 @@ type Props = {
 }
 
 export const Map: React.FC<Props> = ({ refId, mapId }) => {
-	const [coords, setCoords] = useState(getRandomLatLng())
+	const { region } = useContext(RegionContext)
+	const [coords, setCoords] = useState(getRandomLatLng(region))
 	const { ref, inView } = useInView({ triggerOnce: true })
 
 	const refresh = useCallback(() => {
-		setCoords(getRandomLatLng())
-	}, [])
+		setCoords(getRandomLatLng(region))
+	}, [region])
+
+	useEffect(() => {
+		refresh()
+	}, [region])
 
 	const url = `https://www.google.com/maps?q=&layer=c&cbll=${coords.lat},${coords.lng}&cbp=11,0,0,0,0&output=svembed`
 	return (

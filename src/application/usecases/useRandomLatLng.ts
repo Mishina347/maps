@@ -1,8 +1,8 @@
-import { LatLng } from '../../domain/entities/LatLng'
-import { TOKYO_BOUNDS } from '../../constants/mapConfig'
+import { REGION_BOUNDS, RegionKey } from '../../constants/mapConfig'
 
-export function getRandomLatLng(): LatLng {
-	const lat = Math.random() * (TOKYO_BOUNDS.latMax - TOKYO_BOUNDS.latMin) + TOKYO_BOUNDS.latMin
-	const lng = Math.random() * (TOKYO_BOUNDS.lngMax - TOKYO_BOUNDS.lngMin) + TOKYO_BOUNDS.lngMin
+export function getRandomLatLng(region: RegionKey) {
+	const bounds = REGION_BOUNDS[region]
+	const lat = Math.random() * (bounds.latMax - bounds.latMin) + bounds.latMin
+	const lng = Math.random() * (bounds.lngMax - bounds.lngMin) + bounds.lngMin
 	return { lat, lng }
 }

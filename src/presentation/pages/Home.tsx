@@ -1,6 +1,10 @@
-import React, { useState, useCallback, useMemo, useRef } from 'react'
+import React, { useState, useCallback, useMemo, useRef, useContext } from 'react'
 import { Map } from '../components/Map'
 import { MAX_COLUMNS, MAX_COUNTS, MIN_COLUMNS, MIN_COUNTS } from '../../constants/mapConfig'
+import { RegionSelector } from '../components/Selector'
+
+import { PointViewer } from '../components/PointViewer'
+import { RegionContext } from '../../interface/regionContext'
 
 const Home: React.FC = () => {
 	const [columns, setColumns] = useState(3)
@@ -108,7 +112,13 @@ const Home: React.FC = () => {
 						style={{ width: 60 }}
 					/>
 				</fieldset>
+				<fieldset>
+					<legend>地方を選択</legend>
+					<RegionSelector />
+				</fieldset>
+				<PointViewer />
 			</section>
+
 			<section
 				aria-label="ストリートビュー一覧"
 				style={{
