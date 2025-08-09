@@ -1,4 +1,3 @@
-import React from 'react'
 import Home from './presentation/pages/Home'
 
 function App() {
