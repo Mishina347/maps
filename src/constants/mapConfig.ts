@@ -1,5 +1,6 @@
 export enum RegionKey {
-	TOKYO = 'TOKYO',
+	TOKYO_EAST = 'TOKYO_EAST',
+	TOKYO_WEST = 'TOKYO_WEST ',
 	HOKKAIDO = 'HOKKAIDO',
 	TOHOKU = 'TOHOKU',
 	KANTO = 'KANTO',
@@ -11,7 +12,8 @@ export enum RegionKey {
 }
 
 export const RegionNames: Record<RegionKey, string> = {
-	[RegionKey.TOKYO]: '東京',
+	[RegionKey.TOKYO_EAST]: '東京（東側）',
+	[RegionKey.TOKYO_WEST]: '東京（西側）',
 	[RegionKey.HOKKAIDO]: '北海道',
 	[RegionKey.TOHOKU]: '東北',
 	[RegionKey.KANTO]: '関東',
@@ -26,7 +28,13 @@ export const REGION_BOUNDS: Record<
 	RegionKey,
 	{ latMin: number; latMax: number; lngMin: number; lngMax: number }
 > = {
-	[RegionKey.TOKYO]: { latMin: 35.5, latMax: 35.8, lngMin: 139.6, lngMax: 139.9 },
+	[RegionKey.TOKYO_EAST]: { latMin: 35.5, latMax: 35.8, lngMin: 139.6, lngMax: 139.9 },
+	[RegionKey.TOKYO_WEST]: {
+		latMin: 35.5,
+		latMax: 35.8,
+		lngMin: 139.2, // 奥多摩・青梅あたり
+		lngMax: 139.7, // 新宿よりやや西
+	},
 	[RegionKey.HOKKAIDO]: { latMin: 41.3, latMax: 45.5, lngMin: 139.4, lngMax: 145.8 },
 	[RegionKey.TOHOKU]: { latMin: 37.4, latMax: 41.5, lngMin: 139.4, lngMax: 141.9 },
 	[RegionKey.KANTO]: { latMin: 35.2, latMax: 37.0, lngMin: 138.9, lngMax: 140.9 },

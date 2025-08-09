@@ -7,12 +7,12 @@ interface RegionContextType {
 }
 
 export const RegionContext = createContext<RegionContextType>({
-	region: RegionKey.TOKYO,
+	region: RegionKey.TOKYO_EAST,
 	setRegion: () => {},
 })
 
 export const RegionProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-	const [region, setRegion] = useState<RegionKey>(RegionKey.TOKYO)
+	const [region, setRegion] = useState<RegionKey>(RegionKey.TOKYO_EAST)
 
 	return <RegionContext.Provider value={{ region, setRegion }}>{children}</RegionContext.Provider>
 }
